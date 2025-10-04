@@ -1,5 +1,5 @@
 use rust_hdl::prelude::*;
-use std::env;
+use std::{env, fs};
 
 const CLOCK_SPEED_HZ: u64 = 10_000;
 
@@ -36,6 +36,7 @@ fn main() {
         uut.connect_all();
         let vlog = generate_verilog(&uut);
         println!("{vlog}");
+        fs::write("verilog.v", vlog);
     } else if args[1] == "test" {
         let test_cases = (0..16)
             .map(|n| ((n as u8).to_bits::<4>(), (n as u8).to_bits::<4>()))
